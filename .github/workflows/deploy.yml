@@ -53,7 +53,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.134.17.16 << 'EOF'
           cd /home/ubuntu/productServiceAPI
-          docker build -t productServiceAPI .
-          docker stop $(docker ps -q --filter ancestor=your-app-name) || true
-          docker run -d -p 8080:8080 productServiceAPI
+          docker build -t productserviceapi .
+          docker stop $(docker ps -q --filter ancestor=productserviceapi) || true
+          docker run -d -p 8080:8080 productserviceapi
           EOF
