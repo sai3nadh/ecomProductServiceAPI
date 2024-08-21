@@ -1,0 +1,59 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpQIBAAKCAQEArvNqaLXxMH7N3DBDBb5EsQb3PRBmEGUTVJSlivY2pTPSpaFE
+            RID6Z/kUJ1S3BREX/GKh4VSdTL3roD+kJPTvqYh2PwxQ/I8DirYExkzmZGPARB0K
+            5HwPAaXjyDucgdZftYCgAynLFObfG5KDrPOWT6jR2jh7X0YR+VlP1AnZ/ONUR9Py
+            3tOvOti1NpV9Vjs2IkHA5LGE8VUZ3ba0s4mupGqfoh7CDjBRcscCXBXc02Kkflpx
+            w4iORj0nWdphj6NEpOl4NJkCW5cHCVzIohv41zpOF+ueU4nvaUSjnmz+pdR9MGig
+            jWrxb+BkobiQvT5rGsXgqLDBSm33GjgwqiJ7TQIDAQABAoIBAQCGlzj7iU0d08+n
+            X3GQT4ok7ojx71W1syyl2x1nxHbRrQaW6XPNh7QcnOBGScPrH/Vl8rM62I+S5GEL
+            DSrIS668rADcDCuZwKQm6FTQAYUVIjBdtkIU+OPKjsan2kRTForW5Tc0d8iGMf7e
+            BV9LhLHUYrneuakf6JYXUAA7zcBn7W29iy8arZ6Y860/JlxpeeKPw9DrqMDblxSQ
+            I1jUqz1zq/7AT0kxESDew/l1SEp9XBSzAhy+oYqP/06g2TXfjE7F+k6afx6WfTn8
+            MdHWxOcuN8lbWu7oDwTn/HTjNyuZyUWcMQAtLnCdUQoD/w8DdDIaJTCCVlNpWNtu
+            oQAGipq5AoGBANnOAyI+wDrSveiCkImUEo5MtezODP6c8wD4J6qSY9I/46G4dhT3
+            9lpBDruJNB8uBqkQcxzbi8Q3sjs/cgCamW6z2N686sL3PZG9w32iXDlHAFZVvW4Z
+            eIQdV9Ftirn9+uknyk+wUGxzZ2NDbRFXeOKQStBdPKvmPGwX7AWvU/1HAoGBAM2h
+            jEPDuhVU6P98E63m/WeiqDVggzae1zm2Oey6+h9MzsvjG9E07HZQ+6zI5o4z/B4f
+            r1ZyLTka7rvOAGWf6txrTnYfqFonFaujYWjFUqwuh4jegGSCqtE1RbRJLLDX4Q4z
+            yN/BVh7tvUgQGvYWeXQeBx6YdJKBAI+cofHZdDzLAoGBAJ7awbBdYijFAduuNqsR
+            Q0NkMZ/oXNPrNtUzKQMgSAvVqzmNZxo+DAChyJQBKvG+yP7Pz5Vxjwvqr2TFDmng
+            WB3EsF0sHnFakB5W8FkWbPsdjOJrIIFHtH1vRViq825aDoG1ErpyVwXyWaqtR8RJ
+            LxLXuKkmB5U8lD8mZ29yA+kLAoGAEh3fi8DczjBS7t9xpGqrfMv54eoE5XUNJUqG
+            w/KdQtCzj4cM1lvBUZNE+S4iEflGhyjne8hHb7aNvgIiStHSEWVq3kFfxcGXyS11
+            0ZNA+2aGDmr8CN7ySchVwdKIm3QJogSx9/TCr6rmeEji9zd3r+FNY0avTpELCZwV
+            MIemFA0CgYEAjzzwy6T78pnFkn26ntyUvzvSX4faUCZuyRxKBt5dBCMxM+IO2zrU
+            +TWenXQj9NpQUMJuRS6uirdE20z6nWf7aC6/S0esTjk9UBCigROOc9pvK2Jbhq1F
+            1hMgtSasQLH2Vf7BQ8gOSX5qyG/pXw/gkb+OVUG8ATxAI1coRajOVDM=
+            -----END RSA PRIVATE KEY-----
+
+      - name: Copy files to EC2
+        run: |
+          scp -r -o StrictHostKeyChecking=no ./* ubuntu@YOUR-EC2-IP-OR-DNS:/home/ubuntu/app
+
+      - name: Deploy Application
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@YOUR-EC2-IP-OR-DNS << 'EOF'
+          cd /home/ubuntu/app
+          docker build -t your-app-name .
+          docker stop $(docker ps -q --filter ancestor=your-app-name) || true
+          docker run -d -p 8080:8080 your-app-name
+          EOF
