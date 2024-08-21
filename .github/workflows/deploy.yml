@@ -45,9 +45,12 @@ jobs:
             1hMgtSasQLH2Vf7BQ8gOSX5qyG/pXw/gkb+OVUG8ATxAI1coRajOVDM=
             -----END RSA PRIVATE KEY-----
 
+      - name: Build with Maven
+        run: mvn clean package
+
       - name: Copy files to EC2
         run: |
-          scp -r -o StrictHostKeyChecking=no ./* ubuntu@18.134.17.16:/home/ubuntu/productServiceAPI
+          scp -o StrictHostKeyChecking=no ./target/ProductServiceAPI-0.0.1.jar ubuntu@18.134.17.16:/home/ubuntu/productServiceAPI/
 
       - name: Deploy Application
         run: |
