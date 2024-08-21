@@ -15,7 +15,6 @@
 	<description>ProductServiceAPI end points</description>
 	<properties>
 		<java.version>17</java.version>
-		<start-class>com.uh.herts.ProductServiceApiApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
