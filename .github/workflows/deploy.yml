@@ -52,7 +52,7 @@ jobs:
       - name: Deploy Application
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@YOUR-EC2-IP-OR-DNS << 'EOF'
-          cd /home/ubuntu/app
+          cd /home/ubuntu/productServiceAPI
           docker build -t productServiceAPI .
           docker stop $(docker ps -q --filter ancestor=your-app-name) || true
           docker run -d -p 8080:8080 your-app-name

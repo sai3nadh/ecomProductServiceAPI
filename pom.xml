@@ -10,11 +10,12 @@
 	</parent>
 	<groupId>com.uh.herts</groupId>
 	<artifactId>ProductServiceAPI</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>ProductServiceAPI</name>
 	<description>ProductServiceAPI end points</description>
 	<properties>
 		<java.version>17</java.version>
+		<start-class>com.uh.herts.ProductServiceApiApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
