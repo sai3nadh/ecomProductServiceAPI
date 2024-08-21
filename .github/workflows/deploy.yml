@@ -47,7 +47,7 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          scp -r -o StrictHostKeyChecking=no ./* ubuntu@18.134.17.16:/home/ubuntu/app
+          scp -r -o StrictHostKeyChecking=no ./* ubuntu@18.134.17.16:/home/ubuntu/productServiceAPI
 
       - name: Deploy Application
         run: |
@@ -55,5 +55,5 @@ jobs:
           cd /home/ubuntu/productServiceAPI
           docker build -t productServiceAPI .
           docker stop $(docker ps -q --filter ancestor=your-app-name) || true
-          docker run -d -p 8080:8080 your-app-name
+          docker run -d -p 8080:8080 productServiceAPI
           EOF
