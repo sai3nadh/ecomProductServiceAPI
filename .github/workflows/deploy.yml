@@ -50,7 +50,7 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no ./target/ProductServiceAPI-0.0.1.jar ubuntu@18.134.17.16:/home/ubuntu/productServiceAPI/
+          scp -r -o StrictHostKeyChecking=no ./* ubuntu@18.134.17.16:/home/ubuntu/productServiceAPI
 
       - name: Deploy Application
         run: |
