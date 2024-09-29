@@ -54,7 +54,7 @@ public class Product {
     public void setCategoryId(Integer categoryId) {
         if (categoryId != null) {
             this.category = new Category();
-//            this.category.setCategoryId(categoryId);
+
             this.category.setId(categoryId);
         } else {
             this.category = null;

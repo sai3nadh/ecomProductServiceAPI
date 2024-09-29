@@ -291,31 +291,14 @@ public class SearchServiceImpl implements SearchService {
         }
         return results;
     }
-//    @Override
-    public List<SearchResultDTO> searchLast(String query) {
-        List<SearchResultDTO> results = new ArrayList<>();
 
-        // Search for products by name or description
-        List<Product> products = productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
-        results.addAll(products.stream()
-                .map(this::mapProductToSearchResult)
-                .collect(Collectors.toList()));
-
-        // Search for categories by name, description, or tags
-        List<Category> categories = categoryRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrTagsContainingIgnoreCase(query, query, query);
-        results.addAll(categories.stream()
-                .map(this::mapCategoryToSearchResultWithProducts)
-                .collect(Collectors.toList()));
-
-        return results;
-    }
     private SearchResultDTO mapProductToSearchResult(Product product) {
         SearchResultDTO dto = new SearchResultDTO();
         dto.setId(product.getProductId());
         dto.setType("product");
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
-        // Do not set 'products' field for product results, so it will be omitted from the JSON response
+
         return dto;
     }
 

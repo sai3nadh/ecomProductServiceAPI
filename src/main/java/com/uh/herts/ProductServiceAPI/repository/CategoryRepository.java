@@ -10,8 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-//    Cate findByUsername(String username);
-//    List<Category> fi
 
     List<Category> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrTagsContainingIgnoreCase(String name, String description, String tags);
     Page<Category> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrTagsContainingIgnoreCase(String name, String description, String tags, Pageable pageable);

@@ -12,7 +12,7 @@ public class PagedResponse<T> {
     private int size;
     private long totalElements;
     private int totalPages;
-    private long totalProducts;  // Add this field for total product count
+    private long totalProducts;
 
-    // Getters and Setters
+
 }

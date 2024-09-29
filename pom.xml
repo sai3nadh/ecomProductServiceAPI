@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.uh.herts</groupId>
 	<artifactId>ProductServiceAPI</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.3</version>
 	<name>ProductServiceAPI</name>
 	<description>ProductServiceAPI end points</description>
 	<properties>

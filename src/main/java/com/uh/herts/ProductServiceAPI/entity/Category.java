@@ -15,9 +15,7 @@ import java.util.List;
 @Table(name = "categories")
 public class Category {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private UUID id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
